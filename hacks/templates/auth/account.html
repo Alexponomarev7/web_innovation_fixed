@@ -1,0 +1,83 @@
+
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block content %}        
+    {% if user.is_superuser %}
+    <div class="container" id="div-h3">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="display-4" style="margin-left: -1%"> Текущие проекты </h2>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Автор</th>
+                    <th scope="col">Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for post in orders %}
+                <tr>
+                    <th scope="row">{{ post.id }}</th>
+                    <td>{{ post.name }}</td>
+                    <td><b style="color:red">{{ post.author }}</b></td>
+                    <td>
+                        {% if post.status == 4 %}
+                        <i style="color:green">Выполнен</i>
+                        {% elif post.status == 3 %}
+                        <i style="color:blue">Выполняется</i>
+                        {% elif post.status == 2 %}
+                        <i style="color:red">Отклонен</i>
+                        {% else %}
+                        <i style="color:orange">Ожидает подтверждение</i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href=""> Подробнее... </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+    <div class="container" id="div-h3">
+        <div class="row" style="margin-top: 3%">
+            <div class="col-12">
+                <h2 class="display-4" style="margin-left: -1%"> Мои заказы </h2>
+            </div>
+        </div>
+        <hr>
+        {% for post in orders %}
+        <div style="margin-top: 5%" class="row">
+            <div class="media">
+                <div class="media-body">
+                    <h5 class="mt-0"> {{ post.name }}</h5>
+                    {{ post.text }}
+                    <br>
+                        {% if post.status == 4 %}
+                        <i style="color:green">Выполнен</i>
+                        {% elif post.status == 3 %}
+                        <i style="color:blue">Выполняется</i>
+                        {% elif post.status == 2 %}
+                        <i style="color:red">Отклонен</i>
+                        {% else %}
+                        <i style="color:orange">Ожидает подтверждение</i>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 5%" class="row">
+            <button style="box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px; display: inline-block; font-family: Tahoma, Arial, sans-serif; padding: 0px 33px; border-radius: 3px; height: 52px; border: none; outline: none; cursor: pointer; text-transform: none; font-weight: 400; margin: 0px 0px 15px; font-size: 15px; color: rgb(255, 255, 255); background-color: rgb(255, 89, 124);">Сделать новый заказ</button>
+        </div>
+        {% endfor %}
+
+        {% endif %}
+        
+    </div>
+{% endblock %}
